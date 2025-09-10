@@ -1,24 +1,22 @@
-import { Image } from "expo-image";
-import { Platform, StyleSheet } from "react-native";
+import { Platform, ScrollView, StyleSheet } from "react-native";
 
 import { HelloWave } from "@/components/HelloWave";
-import ParallaxScrollView from "@/components/ParallaxScrollView";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
+import GreetingCard from "@/components/WelcomeCard";
 import { useTranslation } from "react-i18next";
 
 export default function HomeScreen() {
   const { t } = useTranslation();
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: "#A1CEDC", dark: "#1D3D47" }}
-      headerImage={
-        <Image
-          source={require("@/assets/images/partial-react-logo.png")}
-          style={styles.reactLogo}
-        />
-      }
-    >
+    <ScrollView style={{ padding: 16, gap: 16 }}>
+      <GreetingCard
+        greeting={"Hello, Victoria"}
+        hasEntriesToday={false}
+        onAddEntry={function (): void {
+          throw new Error("Function not implemented.");
+        }}
+      />
       <ThemedView style={styles.titleContainer}>
         <ThemedText type="title">{t("dashboard")}</ThemedText>
         <HelloWave />
@@ -58,7 +56,7 @@ export default function HomeScreen() {
           <ThemedText type="defaultSemiBold">app-example</ThemedText>.
         </ThemedText>
       </ThemedView>
-    </ParallaxScrollView>
+    </ScrollView>
   );
 }
 
