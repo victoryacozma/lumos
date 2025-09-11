@@ -33,6 +33,7 @@
     "expo-web-browser": "~14.2.0",
     "i18next": "^25.5.0",
     "lucide-react-native": "^0.542.0",
+    "moti": "^0.30.0",
     "react": "19.0.0",
     "react-dom": "19.0.0",
     "react-i18next": "^15.7.3",
