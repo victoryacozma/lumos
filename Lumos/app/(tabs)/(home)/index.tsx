@@ -1,6 +1,7 @@
 import QuickStats, { Stat } from "@/components/QuickStats";
 import RecentEntries from "@/components/RecentEntries";
 import GreetingCard from "@/components/WelcomeCard";
+import { router } from "expo-router";
 import { Battery, Calendar, Target, Zap } from "lucide-react-native";
 import { MotiView } from "moti";
 import { ScrollView, StyleSheet } from "react-native";
@@ -95,9 +96,7 @@ export default function HomeScreen() {
         <GreetingCard
           greeting={"Hello, Victoria"}
           hasEntriesToday={false}
-          onAddEntry={function (): void {
-            throw new Error("Function not implemented.");
-          }}
+          onAddEntry={() => router.push("/entry")}
         />
         <RecentEntries entries={mockEntries} loading={false} />
         <MotiView
