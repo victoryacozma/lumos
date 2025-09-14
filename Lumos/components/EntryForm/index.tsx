@@ -1,6 +1,5 @@
 import styles from "@/components/EntryForm/styles";
 import Slider from "@react-native-community/slider";
-import { Picker } from "@react-native-picker/picker";
 import { ArrowLeft, Save } from "lucide-react-native";
 import React from "react";
 import {
@@ -62,26 +61,9 @@ export default function EntryForm({
         <TouchableOpacity onPress={onBack} style={styles.backButton}>
           <ArrowLeft size={20} color="#4b5563" />
         </TouchableOpacity>
-        <View>
-          <Text style={styles.title}>{typeTitle}</Text>
-          <Text style={styles.subtitle}>
-            Share the details to build self-awareness
-          </Text>
-        </View>
       </View>
 
       <View style={styles.formContainer}>
-        {/* Date */}
-        <View style={styles.field}>
-          <Text style={styles.label}>Date</Text>
-          <TextInput
-            style={styles.input}
-            value={formData.date}
-            onChangeText={(text) => updateField("date", text)}
-            placeholder="YYYY-MM-DD"
-          />
-        </View>
-
         {/* Activity */}
         <View style={styles.field}>
           <Text style={styles.label}>What was it? *</Text>
@@ -97,8 +79,9 @@ export default function EntryForm({
           />
         </View>
 
+        {/* Will do this automatically */}
         {/* Category */}
-        <View style={styles.field}>
+        {/* <View style={styles.field}>
           <Text style={styles.label}>Category</Text>
           <View style={styles.pickerWrapper}>
             <Picker
@@ -114,7 +97,7 @@ export default function EntryForm({
               ))}
             </Picker>
           </View>
-        </View>
+        </View> */}
 
         {/* Intensity */}
         <View style={styles.field}>
