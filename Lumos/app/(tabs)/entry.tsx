@@ -1,14 +1,8 @@
 import { format } from "date-fns";
 import { useRouter } from "expo-router";
-import { ArrowLeft } from "lucide-react-native";
 import { MotiView } from "moti";
 import React, { useState } from "react";
-import {
-  ActivityIndicator,
-  SafeAreaView,
-  StyleSheet,
-  TouchableOpacity,
-} from "react-native";
+import { ActivityIndicator, SafeAreaView, StyleSheet } from "react-native";
 
 import EntryForm from "@/components/EntryForm";
 import EntryTypeSelector from "@/components/EntryTypeSelector";
@@ -49,21 +43,6 @@ export default function AddEntry() {
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* Header */}
-      <MotiView
-        from={{ opacity: 0, translateX: -20 }}
-        animate={{ opacity: 1, translateX: 0 }}
-        style={styles.header}
-      >
-        <TouchableOpacity
-          onPress={() => router.push("/")}
-          style={styles.backButton}
-        >
-          <ArrowLeft size={20} color="#4b5563" />
-        </TouchableOpacity>
-      </MotiView>
-
-      {/* Type Selection or Form */}
       {!selectedType ? (
         <MotiView
           from={{ opacity: 0, translateY: 20 }}
@@ -103,7 +82,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     margin: 16,
+    marginTop: 50,
     gap: 24,
+    justifyContent: "flex-start",
   },
   header: {
     flexDirection: "row",

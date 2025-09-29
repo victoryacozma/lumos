@@ -31,7 +31,7 @@ export default function EntryTypeSelector({ onSelectType }: Props) {
   ];
 
   return (
-    <ScrollView contentContainerStyle={{ paddingBottom: 32 }}>
+    <ScrollView contentContainerStyle={{ paddingBottom: 32, marginTop: 30 }}>
       <View style={styles.header}>
         <Text style={styles.title}>How are you feeling?</Text>
         <Text style={styles.subtitle}>
