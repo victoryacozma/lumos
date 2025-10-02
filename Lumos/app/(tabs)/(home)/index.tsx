@@ -13,27 +13,27 @@ const weeklyStats: Stat[] = [
     icon: <Calendar color={"white"} />,
     label: "Today",
     value: 14,
-    color: ["#60a5fa", "#2563eb"] as const,
+    color: ["#22c55e", "#15803d"] as const, // Primary green gradient
   },
   {
     icon: <Zap color={"white"} />,
     label: "Energizing",
     value: 9,
-    color: ["#4ade80", "#16a34a"] as const,
+    color: ["#10b981", "#047857"] as const, // Emerald gradient
     subtitle: "this week",
   },
   {
     icon: <Battery color={"white"} />,
     label: "Draining",
     value: 7,
-    color: ["#f87171", "#dc2626"] as const,
+    color: ["#f59e0b", "#d97706"] as const, // Amber for draining energy
     subtitle: "this week",
   },
   {
     icon: <Target color={"white"} />,
     label: "Total",
     value: 21,
-    color: ["#a78bfa", "#7c3aed"] as const,
+    color: ["#34d399", "#059669"] as const, // Mint green gradient
   },
 ];
 

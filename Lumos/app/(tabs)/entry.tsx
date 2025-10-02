@@ -2,18 +2,11 @@ import { format } from "date-fns";
 import { useRouter } from "expo-router";
 import { MotiView } from "moti";
 import React, { useState } from "react";
-import {
-  ActivityIndicator,
-  Button,
-  SafeAreaView,
-  StyleSheet,
-  View,
-} from "react-native";
+import { ActivityIndicator, SafeAreaView, StyleSheet } from "react-native";
 
 import EntryForm from "@/components/EntryForm";
 import EntryTypeSelector from "@/components/EntryTypeSelector";
 import { EnergyEntry } from "@/entities/EnergyEntry";
-import { supabase } from "@/lib/supabase";
 
 export default function AddEntry() {
   const router = useRouter();
@@ -46,33 +39,6 @@ export default function AddEntry() {
     // } finally {
     //   setIsSubmitting(false);
     // }
-  };
-
-  const handleAuthTest = async () => {
-    // 🔹 Sign up
-    const { data, error } = await supabase.auth.signUp({
-      email: "test@email.com",
-      password: "password123",
-    });
-
-    if (error) {
-      console.log("Sign up error:", error.message);
-    } else {
-      console.log("Sign up success:", data);
-    }
-
-    // 🔹 Sign in
-    const { data: session, error: loginError } =
-      await supabase.auth.signInWithPassword({
-        email: "test@email.com",
-        password: "password123",
-      });
-
-    if (loginError) {
-      console.log("Login error:", loginError.message);
-    } else {
-      console.log("Login success, session:", session);
-    }
   };
 
   return (
@@ -108,9 +74,6 @@ export default function AddEntry() {
           )}
         </MotiView>
       )}
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <Button title="Test Supabase Auth" onPress={handleAuthTest} />
-      </View>
     </SafeAreaView>
   );
 }

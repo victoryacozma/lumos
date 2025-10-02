@@ -2,5 +2,20 @@
   "welcome": "Welcome",
   "dashboard": "Dashboard",
   "add_entry": "Add entry",
-  "insights": "Insights"
+  "insights": "Insights",
+  "login": "Log In",
+  "signup": "Sign Up",
+  "email": "Email",
+  "password": "Password",
+  "confirm_password": "Confirm Password",
+  "forgot_password": "Forgot Password?",
+  "dont_have_account": "Don't have an account?",
+  "already_have_account": "Already have an account?",
+  "sign_in_to_continue": "Sign in to continue",
+  "create_your_account": "Create your account",
+  "track_your_energy": "Track your energy levels",
+  "full_name": "Full Name",
+  "get_started": "Get Started",
+  "welcome_back": "Welcome Back",
+  "continue_journey": "Continue your energy tracking journey"
 }
