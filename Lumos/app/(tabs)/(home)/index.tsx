@@ -1,12 +1,13 @@
 import QuickStats, { Stat } from "@/components/QuickStats";
 import RecentEntries from "@/components/RecentEntries";
 import GreetingCard from "@/components/WelcomeCard";
-import { mockEntries } from "@/helpers/mockEntries";
+import { useEnergyEntries } from "@/hooks/useEnergyEntries";
 import { router } from "expo-router";
 import { Battery, Calendar, Target, Zap } from "lucide-react-native";
 import { MotiView } from "moti";
 import { ScrollView, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useMemo } from "react";
 
 const weeklyStats: Stat[] = [
   {
@@ -38,15 +39,30 @@ const weeklyStats: Stat[] = [
 ];
 
 export default function HomeScreen() {
+  const { entries, loading } = useEnergyEntries();
+
+  // Transform service entries to component format
+  const formattedEntries = useMemo(() => {
+    return entries.map((entry) => ({
+      id: entry.id,
+      type: entry.type,
+      activity: entry.activity,
+      category: entry.activity, // Using activity as category for now
+      date: entry.created_at,
+      intensity: entry.intensity,
+    }));
+  }, [entries]);
+
+  console.log("Entries History:", entries);
   return (
     <SafeAreaView>
       <ScrollView style={styles.container}>
         <GreetingCard
           greeting={"Hello, Victoria"}
-          hasEntriesToday={false}
+          hasEntriesToday={entries.length > 0}
           onAddEntry={() => router.push("/entry")}
         />
-        <RecentEntries entries={mockEntries} loading={false} />
+        <RecentEntries entries={formattedEntries} loading={loading} />
         <MotiView
           from={{ opacity: 0, translateY: 20 }}
           animate={{ opacity: 1, translateY: 0 }}

@@ -2,15 +2,26 @@ import { format } from "date-fns";
 import { useRouter } from "expo-router";
 import { MotiView } from "moti";
 import React, { useState } from "react";
-import { ActivityIndicator, SafeAreaView, StyleSheet } from "react-native";
+import {
+  ActivityIndicator,
+  Alert,
+  SafeAreaView,
+  StyleSheet,
+} from "react-native";
 
 import EntryForm from "@/components/EntryForm";
 import EntryTypeSelector from "@/components/EntryTypeSelector";
-import { EnergyEntry } from "@/entities/EnergyEntry";
+import {
+  energyEntriesService,
+  EnergyEntryData,
+  EnergyEntryType,
+} from "@/service/EnergyEntry";
 
 export default function AddEntry() {
   const router = useRouter();
-  const [selectedType, setSelectedType] = useState<string | null>(null);
+  const [selectedType, setSelectedType] = useState<EnergyEntryType | null>(
+    null
+  );
   const [formData, setFormData] = useState({
     date: format(new Date(), "yyyy-MM-dd"),
     activity: "",
@@ -23,22 +34,50 @@ export default function AddEntry() {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = async (data: Omit<EnergyEntry, "type">) => {
-    router.push("/");
-    // if (!selectedType) return;
-    // setIsSubmitting(true);
-    // try {
-    //   const entry: EnergyEntry = {
-    //     ...data,
-    //     type: selectedType,
-    //   };
-    //   await EnergyEntry.create(entry);
-    //   router.push("/");
-    // } catch (error) {
-    //   console.error("Error creating entry:", error);
-    // } finally {
-    //   setIsSubmitting(false);
-    // }
+  const handleSubmitEntry = async (data: any) => {
+    try {
+      setIsSubmitting(true);
+
+      const entryData: EnergyEntryData = {
+        type: selectedType!,
+        activity: data.activity,
+        intensity: data.intensity,
+        description: data.description,
+        reflection: data.reflection,
+      };
+
+      await energyEntriesService.create(entryData);
+
+      Alert.alert("Success! 🎉", "Your energy entry has been saved.", [
+        {
+          text: "Add Another",
+          onPress: () => {
+            setSelectedType(null);
+            setFormData({
+              date: format(new Date(), "yyyy-MM-dd"),
+              activity: "",
+              description: "",
+              intensity: 3,
+              category: "other",
+              mood_before: 5,
+              mood_after: 5,
+              reflection: "",
+            });
+          },
+        },
+        {
+          text: "Go Home",
+          onPress: () => router.push("/(tabs)/(home)"),
+        },
+      ]);
+    } catch (error) {
+      console.error("Error saving entry:", error);
+      Alert.alert("Error", "Failed to save your entry. Please try again.", [
+        { text: "OK" },
+      ]);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -61,7 +100,7 @@ export default function AddEntry() {
             type={selectedType}
             formData={formData}
             setFormData={setFormData}
-            onSubmit={handleSubmit}
+            onSubmit={handleSubmitEntry}
             onBack={() => setSelectedType(null)}
             isSubmitting={isSubmitting}
           />
