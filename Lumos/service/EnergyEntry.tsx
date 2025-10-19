@@ -45,9 +45,19 @@ export const energyEntriesService = {
 
   // Get all entries for the current user
   async getAll(): Promise<EnergyEntry[]> {
+    const { data: user } = await supabase.auth.getUser();
+
+    if (!user.user) {
+      console.log("No authenticated user found");
+      return [];
+    }
+
+    console.log("🔍 Fetching entries for user:", user.user.id);
+
     const { data: entries, error } = await supabase
       .from("energy_entries")
       .select("*")
+      .eq("user_id", user.user.id)
       .order("created_at", { ascending: false });
 
     if (error) {
@@ -55,14 +65,22 @@ export const energyEntriesService = {
       throw new Error(error.message);
     }
 
+    console.log("📊 Raw entries from DB:", entries?.length || 0, entries);
     return entries || [];
   },
 
   // Get entries by type
   async getByType(type: EnergyEntryType): Promise<EnergyEntry[]> {
+    const { data: user } = await supabase.auth.getUser();
+
+    if (!user.user) {
+      return [];
+    }
+
     const { data: entries, error } = await supabase
       .from("energy_entries")
       .select("*")
+      .eq("user_id", user.user.id)
       .eq("type", type)
       .order("created_at", { ascending: false });
 
@@ -76,12 +94,19 @@ export const energyEntriesService = {
 
   // Get recent entries (last 7 days)
   async getRecent(): Promise<EnergyEntry[]> {
+    const { data: user } = await supabase.auth.getUser();
+
+    if (!user.user) {
+      return [];
+    }
+
     const sevenDaysAgo = new Date();
     sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
 
     const { data: entries, error } = await supabase
       .from("energy_entries")
       .select("*")
+      .eq("user_id", user.user.id)
       .gte("created_at", sevenDaysAgo.toISOString())
       .order("created_at", { ascending: false });
 

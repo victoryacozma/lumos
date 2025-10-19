@@ -27,6 +27,14 @@ export default function RootLayout() {
       <I18nextProvider i18n={i18n}>
         <Stack>
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack.Screen
+            name="stats/positive-entries"
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="stats/energy-drainers"
+            options={{ headerShown: false }}
+          />
           <Stack.Screen name="auth" options={{ headerShown: false }} />
           <Stack.Screen name="+not-found" />
         </Stack>

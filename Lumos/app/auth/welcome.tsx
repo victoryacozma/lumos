@@ -2,9 +2,10 @@ import { ThemedButton } from "@/components/ThemedButton";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import { useThemeColor } from "@/hooks/useThemeColor";
+import { LinearGradient } from "expo-linear-gradient";
 import { router } from "expo-router";
 import { Battery, Calendar, Target, Zap } from "lucide-react-native";
-import { MotiView } from "moti";
+import { MotiView, ScrollView } from "moti";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { StyleSheet } from "react-native";
@@ -35,79 +36,103 @@ export default function WelcomeScreen() {
   return (
     <ThemedView style={styles.container}>
       <SafeAreaView style={styles.safeArea}>
-        {/* Logo */}
-        <MotiView
-          from={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ type: "timing", duration: 800 }}
-          style={styles.logoContainer}
-        >
-          <ThemedView
-            style={[styles.logoBackground, { backgroundColor: tintColor }]}
+        <ScrollView>
+          {/* Logo with Gradient */}
+          <MotiView
+            from={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ type: "timing", duration: 800 }}
+            style={styles.logoContainer}
           >
-            <Zap size={60} color="white" />
-          </ThemedView>
-        </MotiView>
+            <LinearGradient
+              colors={["#22c55e", "#15803d", "#065f46"]}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 1 }}
+              style={styles.logoBackground}
+            >
+              <Zap size={60} color="white" />
+            </LinearGradient>
+          </MotiView>
 
-        {/* Header */}
-        <MotiView
-          from={{ opacity: 0, translateY: 30 }}
-          animate={{ opacity: 1, translateY: 0 }}
-          transition={{ type: "timing", duration: 600, delay: 300 }}
-          style={styles.headerContainer}
-        >
-          <ThemedText type="title" style={styles.title}>
-            Welcome to Lumos
-          </ThemedText>
-          <ThemedText style={styles.subtitle}>
-            {t("track_your_energy")}
-          </ThemedText>
-        </MotiView>
+          {/* Header */}
+          <MotiView
+            from={{ opacity: 0, translateY: 30 }}
+            animate={{ opacity: 1, translateY: 0 }}
+            transition={{ type: "timing", duration: 600, delay: 300 }}
+            style={styles.headerContainer}
+          >
+            <ThemedText type="title" style={styles.title}>
+              Welcome to Lumos
+            </ThemedText>
+            <ThemedText style={styles.subtitle}>
+              {t("track_your_energy")}
+            </ThemedText>
+          </MotiView>
 
-        {/* Features */}
-        <MotiView
-          from={{ opacity: 0, translateY: 30 }}
-          animate={{ opacity: 1, translateY: 0 }}
-          transition={{ type: "timing", duration: 600, delay: 500 }}
-          style={styles.featuresContainer}
-        >
-          {features.map((feature, index) => (
-            <ThemedView key={index} style={styles.featureItem}>
-              <ThemedView style={styles.featureIcon}>{feature.icon}</ThemedView>
-              <ThemedView style={styles.featureContent}>
-                <ThemedText type="defaultSemiBold" style={styles.featureTitle}>
-                  {feature.title}
-                </ThemedText>
-                <ThemedText style={styles.featureDescription}>
-                  {feature.description}
-                </ThemedText>
-              </ThemedView>
-            </ThemedView>
-          ))}
-        </MotiView>
+          {/* Features */}
+          <MotiView
+            from={{ opacity: 0, translateY: 30 }}
+            animate={{ opacity: 1, translateY: 0 }}
+            transition={{ type: "timing", duration: 600, delay: 500 }}
+            style={styles.featuresContainer}
+          >
+            {features.map((feature, index) => (
+              <MotiView
+                key={index}
+                from={{ opacity: 0, translateX: -20 }}
+                animate={{ opacity: 1, translateX: 0 }}
+                transition={{
+                  type: "timing",
+                  duration: 400,
+                  delay: 600 + index * 100,
+                }}
+              >
+                <ThemedView style={styles.featureItem}>
+                  <LinearGradient
+                    colors={["#dcfce7", "#bbf7d0"]}
+                    style={styles.featureIcon}
+                  >
+                    {feature.icon}
+                  </LinearGradient>
+                  <ThemedView style={styles.featureContent}>
+                    <ThemedText
+                      type="defaultSemiBold"
+                      style={styles.featureTitle}
+                    >
+                      {feature.title}
+                    </ThemedText>
+                    <ThemedText style={styles.featureDescription}>
+                      {feature.description}
+                    </ThemedText>
+                  </ThemedView>
+                </ThemedView>
+              </MotiView>
+            ))}
+          </MotiView>
 
-        {/* Buttons */}
-        <MotiView
-          from={{ opacity: 0, translateY: 30 }}
-          animate={{ opacity: 1, translateY: 0 }}
-          transition={{ type: "timing", duration: 600, delay: 700 }}
-          style={styles.buttonContainer}
-        >
-          <ThemedButton
-            title={t("get_started")}
-            onPress={() => router.push("/auth/register")}
-            size="large"
-            buttonStyle={styles.primaryButton}
-          />
+          {/* Buttons */}
+          <MotiView
+            from={{ opacity: 0, translateY: 30 }}
+            animate={{ opacity: 1, translateY: 0 }}
+            transition={{ type: "timing", duration: 600, delay: 700 }}
+            style={styles.buttonContainer}
+          >
+            <ThemedButton
+              title={t("get_started")}
+              onPress={() => router.push("/auth/register")}
+              size="large"
+              buttonStyle={styles.primaryButton}
+            />
 
-          <ThemedButton
-            title={t("login")}
-            variant="outline"
-            onPress={() => router.push("/auth/login")}
-            size="large"
-            buttonStyle={styles.secondaryButton}
-          />
-        </MotiView>
+            <ThemedButton
+              title={t("login")}
+              variant="outline"
+              onPress={() => router.push("/auth/login")}
+              size="large"
+              buttonStyle={styles.secondaryButton}
+            />
+          </MotiView>
+        </ScrollView>
       </SafeAreaView>
     </ThemedView>
   );
@@ -132,6 +157,15 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     alignItems: "center",
     justifyContent: "center",
+    // Add shadow for more depth
+    shadowColor: "#16a34a",
+    shadowOffset: {
+      width: 0,
+      height: 8,
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 10,
+    elevation: 12,
   },
   headerContainer: {
     alignItems: "center",
@@ -163,7 +197,15 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginRight: 16,
-    backgroundColor: "rgba(10, 126, 164, 0.1)",
+    // Add subtle shadow
+    shadowColor: "#16a34a",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
   },
   featureContent: {
     flex: 1,

@@ -24,8 +24,6 @@ export default function TopInsights({
       { count: number; totalIntensity: number }
     > = {};
 
-    console.log("entries are: ", entries);
-
     entries
       .filter((e) => e.type === type)
       .forEach((entry) => {

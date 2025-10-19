@@ -13,6 +13,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { useThemeColor } from "@/hooks/useThemeColor";
 import { router } from "expo-router";
 import { User } from "lucide-react-native";
+import SimpleStats from "@/components/SimpleStats";
 
 export default function Insights() {
   const [entries, setEntries] = useState<any[]>([]);
@@ -44,68 +45,26 @@ export default function Insights() {
         contentContainerStyle={styles.content}
         showsVerticalScrollIndicator={false}
       >
-        {/* Profile Section */}
-        <MotiView
-          from={{ opacity: 0, translateY: 20 }}
-          animate={{ opacity: 1, translateY: 0 }}
-          style={styles.profileSection}
-        >
-          <ThemedView style={styles.profileCard}>
-            <ThemedView
-              style={[styles.avatarContainer, { backgroundColor: tintColor }]}
-            >
-              <User size={32} color="white" />
-            </ThemedView>
-            <ThemedView style={styles.profileInfo}>
-              <ThemedText type="title" style={styles.userName}>
-                {user?.user_metadata?.full_name || "User"}
-              </ThemedText>
-              <ThemedText style={styles.userEmail}>{user?.email}</ThemedText>
-            </ThemedView>
-          </ThemedView>
-
-          <ThemedButton
-            title="Logout"
-            variant="outline"
-            onPress={handleLogout}
-            buttonStyle={styles.logoutButton}
-          />
-        </MotiView>
-        {/* Header
-      <MotiView
-        from={{ opacity: 0, translateY: 20 }}
-        animate={{ opacity: 1, translateY: 0 }}
-        style={styles.header}
-      >
-        <Text style={styles.title}>Your Insights</Text>
-        <Text style={styles.subtitle}>Discover your energy patterns</Text>
-      </MotiView>
-
-      {/* Simple Stats */}
-        {/* <MotiView
-        from={{ opacity: 0, translateY: 20 }}
-        animate={{ opacity: 1, translateY: 0 }}
-        transition={{ delay: 100 }}
-      >
-        <SimpleStats entries={recentEntries} loading={loading} />
-      </MotiView>
-
-      {/* Energy Balance */}
-        {/* <MotiView
-        from={{ opacity: 0, translateY: 20 }}
-        animate={{ opacity: 1, translateY: 0 }}
-        transition={{ delay: 200 }}
-      >
-        <EnergyBalance entries={recentEntries} loading={loading} />
-      </MotiView>   */}
-
-        {/* Top Insights */}
         <MotiView
           from={{ opacity: 0, translateY: 20 }}
           animate={{ opacity: 1, translateY: 0 }}
           transition={{ delay: 300 }}
         >
           <TopInsights entries={entries} loading={false} />
+        </MotiView>
+        {/* Profile Section */}
+        <MotiView
+          from={{ opacity: 0, translateY: 20 }}
+          animate={{ opacity: 1, translateY: 0 }}
+          style={styles.profileSection}
+        >
+          <SimpleStats />
+          <ThemedButton
+            title="Logout"
+            variant="outline"
+            onPress={handleLogout}
+            buttonStyle={styles.logoutButton}
+          />
         </MotiView>
       </ScrollView>
     </SafeAreaView>

@@ -27,15 +27,73 @@ export function useAuth() {
     return () => subscription.unsubscribe();
   }, []);
 
+  const signIn = async (email: string, password: string) => {
+    setLoading(true);
+    try {
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+
+      if (error) {
+        throw error;
+      }
+
+      return { data, error: null };
+    } catch (error) {
+      console.error("Sign in error:", error);
+      return { data: null, error };
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const signUp = async (email: string, password: string, fullName?: string) => {
+    setLoading(true);
+    try {
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          data: {
+            full_name: fullName,
+          },
+        },
+      });
+
+      if (error) {
+        throw error;
+      }
+
+      return { data, error: null };
+    } catch (error) {
+      console.error("Sign up error:", error);
+      return { data: null, error };
+    } finally {
+      setLoading(false);
+    }
+  };
   const signOut = async () => {
-    await supabase.auth.signOut();
+    setLoading(true);
+    try {
+      const { error } = await supabase.auth.signOut();
+      if (error) {
+        throw error;
+      }
+    } catch (error) {
+      console.error("Sign out error:", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return {
-    session,
     user,
+    session,
     loading,
+    signIn,
+    signUp,
     signOut,
-    isAuthenticated: !!session,
+    isAuthenticated: !!user,
   };
 }

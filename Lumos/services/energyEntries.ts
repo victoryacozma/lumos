@@ -74,6 +74,45 @@ export const energyEntriesService = {
     return entries || [];
   },
 
+  // Delete an entry
+  async delete(id: string): Promise<void> {
+    const { data: user } = await supabase.auth.getUser();
+
+    if (!user.user) {
+      throw new Error("User not authenticated");
+    }
+
+    // First check if the entry belongs to the current user
+    const { data: entry, error: fetchError } = await supabase
+      .from("energy_entries")
+      .select("user_id")
+      .eq("id", id)
+      .single();
+
+    if (fetchError) {
+      console.error("Error fetching entry for deletion:", fetchError);
+      throw new Error("Entry not found");
+    }
+
+    if (entry.user_id !== user.user.id) {
+      throw new Error(
+        "Unauthorized: Cannot delete entry that doesn't belong to you"
+      );
+    }
+
+    // Delete the entry
+    const { error } = await supabase
+      .from("energy_entries")
+      .delete()
+      .eq("id", id)
+      .eq("user_id", user.user.id); // Extra security check
+
+    if (error) {
+      console.error("Error deleting energy entry:", error);
+      throw new Error(error.message);
+    }
+  },
+
   // Get statistics
   async getStats(): Promise<{
     totalEntries: number;

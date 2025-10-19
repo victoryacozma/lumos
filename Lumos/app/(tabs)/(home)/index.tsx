@@ -7,7 +7,7 @@ import { Battery, Calendar, Target, Zap } from "lucide-react-native";
 import { MotiView } from "moti";
 import { ScrollView, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useMemo } from "react";
+import React, { useMemo } from "react";
 
 const weeklyStats: Stat[] = [
   {
@@ -39,7 +39,9 @@ const weeklyStats: Stat[] = [
 ];
 
 export default function HomeScreen() {
-  const { entries, loading } = useEnergyEntries();
+  const { entries, loading, refetch } = useEnergyEntries();
+
+  console.log("🏠 HomeScreen: Displaying", entries?.length || 0, "entries");
 
   // Transform service entries to component format
   const formattedEntries = useMemo(() => {
@@ -52,8 +54,6 @@ export default function HomeScreen() {
       intensity: entry.intensity,
     }));
   }, [entries]);
-
-  console.log("Entries History:", entries);
   return (
     <SafeAreaView>
       <ScrollView style={styles.container}>

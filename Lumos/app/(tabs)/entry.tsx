@@ -16,12 +16,15 @@ import {
   EnergyEntryData,
   EnergyEntryType,
 } from "@/service/EnergyEntry";
+import { useGlobalRefetch } from "@/hooks/useGlobalRefetch";
 
 export default function AddEntry() {
   const router = useRouter();
+  const { triggerGlobalRefetch } = useGlobalRefetch();
   const [selectedType, setSelectedType] = useState<EnergyEntryType | null>(
     null
   );
+
   const [formData, setFormData] = useState({
     date: format(new Date(), "yyyy-MM-dd"),
     activity: "",
@@ -47,6 +50,8 @@ export default function AddEntry() {
       };
 
       await energyEntriesService.create(entryData);
+      console.log("✅ Entry created - triggering global refetch");
+      triggerGlobalRefetch();
 
       Alert.alert("Success! 🎉", "Your energy entry has been saved.", [
         {
@@ -65,6 +70,7 @@ export default function AddEntry() {
             });
           },
         },
+
         {
           text: "Go Home",
           onPress: () => router.push("/(tabs)/(home)"),
