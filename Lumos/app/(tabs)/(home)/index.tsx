@@ -5,9 +5,9 @@ import { useEnergyEntries } from "@/hooks/useEnergyEntries";
 import { router } from "expo-router";
 import { Battery, Calendar, Target, Zap } from "lucide-react-native";
 import { MotiView } from "moti";
+import React, { useMemo } from "react";
 import { ScrollView, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import React, { useMemo } from "react";
 
 const weeklyStats: Stat[] = [
   {
@@ -62,7 +62,11 @@ export default function HomeScreen() {
           hasEntriesToday={entries.length > 0}
           onAddEntry={() => router.push("/entry")}
         />
-        <RecentEntries entries={formattedEntries} loading={loading} />
+        <RecentEntries
+          entries={formattedEntries}
+          loading={loading}
+          onViewAll={() => router.navigate("/insights")}
+        />
         <MotiView
           from={{ opacity: 0, translateY: 20 }}
           animate={{ opacity: 1, translateY: 0 }}

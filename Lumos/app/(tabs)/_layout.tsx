@@ -4,7 +4,7 @@ import TabBarBackground from "@/components/ui/TabBarBackground";
 import { Colors } from "@/constants/Colors";
 import { useColorScheme } from "@/hooks/useColorScheme";
 import { Tabs } from "expo-router";
-import { BarChart3, Plus } from "lucide-react-native";
+import { BarChart3, Plus, UserRound } from "lucide-react-native";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { Platform } from "react-native";
@@ -51,6 +51,13 @@ export default function TabLayout() {
           title: t("insights"),
           // tabBarIcon: () => <BarChart3 size={28} />,
           tabBarIcon: ({ color }) => <BarChart3 size={28} color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="my_account"
+        options={{
+          title: t("my_account"),
+          tabBarIcon: ({ color }) => <UserRound size={28} color={color} />,
         }}
       />
     </Tabs>

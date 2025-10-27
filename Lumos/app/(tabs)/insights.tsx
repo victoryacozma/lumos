@@ -1,25 +1,18 @@
 import { MotiView } from "moti";
 import React, { useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
 import { Alert, SafeAreaView, ScrollView, StyleSheet } from "react-native";
 
 // Example EnergyEntry (replace with your actual data source)
+import SimpleStats from "@/components/SimpleStats";
 import { ThemedButton } from "@/components/ThemedButton";
-import { ThemedText } from "@/components/ThemedText";
-import { ThemedView } from "@/components/ThemedView";
 import TopInsights from "@/components/TopInsights";
 import { mockEntries } from "@/helpers/mockEntries";
 import { useAuth } from "@/hooks/useAuth";
-import { useThemeColor } from "@/hooks/useThemeColor";
 import { router } from "expo-router";
-import { User } from "lucide-react-native";
-import SimpleStats from "@/components/SimpleStats";
 
 export default function Insights() {
   const [entries, setEntries] = useState<any[]>([]);
-  const { t } = useTranslation();
-  const { user, signOut } = useAuth();
-  const tintColor = useThemeColor({}, "tint");
+  const { signOut } = useAuth();
 
   useEffect(() => {
     setEntries(mockEntries);
@@ -58,7 +51,7 @@ export default function Insights() {
           animate={{ opacity: 1, translateY: 0 }}
           style={styles.profileSection}
         >
-          <SimpleStats />
+          <SimpleStats loading={false} />
           <ThemedButton
             title="Logout"
             variant="outline"
