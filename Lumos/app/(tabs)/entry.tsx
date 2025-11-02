@@ -7,16 +7,18 @@ import {
   Alert,
   SafeAreaView,
   StyleSheet,
+  View,
 } from "react-native";
 
 import EntryForm from "@/components/EntryForm";
 import EntryTypeSelector from "@/components/EntryTypeSelector";
+import { useAppColors } from "@/hooks/useAppColors";
+import { useGlobalRefetch } from "@/hooks/useGlobalRefetch";
 import {
   energyEntriesService,
   EnergyEntryData,
   EnergyEntryType,
 } from "@/service/EnergyEntry";
-import { useGlobalRefetch } from "@/hooks/useGlobalRefetch";
 
 export default function AddEntry() {
   const router = useRouter();
@@ -36,6 +38,7 @@ export default function AddEntry() {
     reflection: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const { colors } = useAppColors();
 
   const handleSubmitEntry = async (data: any) => {
     try {
@@ -87,43 +90,50 @@ export default function AddEntry() {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      {!selectedType ? (
-        <MotiView
-          from={{ opacity: 0, translateY: 20 }}
-          animate={{ opacity: 1, translateY: 0 }}
-          transition={{ delay: 100 }}
-        >
-          <EntryTypeSelector onSelectType={setSelectedType} />
-        </MotiView>
-      ) : (
-        <MotiView
-          from={{ opacity: 0, translateY: 20 }}
-          animate={{ opacity: 1, translateY: 0 }}
-          transition={{ delay: 200 }}
-        >
-          <EntryForm
-            type={selectedType}
-            formData={formData}
-            setFormData={setFormData}
-            onSubmit={handleSubmitEntry}
-            onBack={() => setSelectedType(null)}
-            isSubmitting={isSubmitting}
-          />
-          {isSubmitting && (
-            <ActivityIndicator
-              size="small"
-              color="#7c3aed"
-              style={{ marginTop: 12 }}
+    <SafeAreaView
+      style={[styles.safeArea, { backgroundColor: colors.backgroundSecondary }]}
+    >
+      <View style={styles.container}>
+        {!selectedType ? (
+          <MotiView
+            from={{ opacity: 0, translateY: 20 }}
+            animate={{ opacity: 1, translateY: 0 }}
+            transition={{ delay: 100 }}
+          >
+            <EntryTypeSelector onSelectType={setSelectedType} />
+          </MotiView>
+        ) : (
+          <MotiView
+            from={{ opacity: 0, translateY: 20 }}
+            animate={{ opacity: 1, translateY: 0 }}
+            transition={{ delay: 200 }}
+          >
+            <EntryForm
+              type={selectedType}
+              formData={formData}
+              setFormData={setFormData}
+              onSubmit={handleSubmitEntry}
+              onBack={() => setSelectedType(null)}
+              isSubmitting={isSubmitting}
             />
-          )}
-        </MotiView>
-      )}
+            {isSubmitting && (
+              <ActivityIndicator
+                size="small"
+                color="#7c3aed"
+                style={{ marginTop: 12 }}
+              />
+            )}
+          </MotiView>
+        )}
+      </View>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+  },
   container: {
     flex: 1,
     margin: 16,

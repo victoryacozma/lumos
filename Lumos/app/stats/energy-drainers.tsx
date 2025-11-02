@@ -226,22 +226,22 @@ const styles = StyleSheet.create({
   statsHeader: {
     padding: 20,
     alignItems: "center",
-    backgroundColor: "#fef3c7", // Light amber background
+    backgroundColor: "#f9fafb", // Light gray background instead of amber
     marginHorizontal: 20,
     marginVertical: 16,
     borderRadius: 12,
     borderWidth: 1,
-    borderColor: "#fde68a", // Subtle amber border
+    borderColor: "#e5e7eb", // Gray border instead of amber
   },
   statsText: {
     fontSize: 16,
     textAlign: "center",
-    color: "#92400e", // Warm brown text
+    color: "#374151", // Dark gray text instead of brown
   },
   statsHighlight: {
     fontSize: 18,
     fontWeight: "bold",
-    color: "#d97706", // Amber highlight
+    color: "#dc2626", // Red highlight for draining activities
   },
   listContainer: {
     paddingHorizontal: 20,
@@ -252,11 +252,11 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     borderRadius: 12,
     borderWidth: 1,
-    borderColor: "#fed7aa", // Light orange border
+    borderColor: "#e5e7eb", // Gray border instead of orange
     borderLeftWidth: 4,
-    borderLeftColor: "#f59e0b", // Amber left border
-    backgroundColor: "#fffbeb", // Very light amber background
-    shadowColor: "#f59e0b",
+    borderLeftColor: "#dc2626", // Red left border for draining
+    backgroundColor: "#ffffff", // White background instead of amber
+    shadowColor: "#000000",
     shadowOffset: {
       width: 0,
       height: 2,
@@ -284,20 +284,20 @@ const styles = StyleSheet.create({
   entryType: {
     fontSize: 12,
     fontWeight: "600",
-    color: "#d97706", // Amber text for draining type
+    color: "#dc2626", // Red text for draining type
   },
   intensityBadge: {
-    backgroundColor: "#fef3c7", // Light amber background
+    backgroundColor: "#f3f4f6", // Light gray background
     paddingVertical: 4,
     paddingHorizontal: 8,
     borderRadius: 12,
     borderWidth: 1,
-    borderColor: "#fde68a", // Amber border
+    borderColor: "#d1d5db", // Gray border
   },
   intensityText: {
     fontSize: 12,
     fontWeight: "600",
-    color: "#92400e", // Warm brown text
+    color: "#374151", // Dark gray text
   },
   deleteButton: {
     padding: 6,
@@ -365,7 +365,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 8,
     textAlign: "center",
-    color: "#92400e",
+    color: "#374151", // Dark gray instead of brown
   },
   emptyText: {
     textAlign: "center",
